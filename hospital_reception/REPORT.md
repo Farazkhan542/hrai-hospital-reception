@@ -25,9 +25,10 @@ project partners, declare that each of us contributed equally and with shared
 dedication to the development and execution of this project — including its
 design, programming, testing, and documentation.
 
-_[FILL IN: replace with equal-contribution statement, or list each student's
-specific contributions — e.g. "Student A: reasoning + knowledge base; Student B:
-navigation + world/configs; both: integration, report, video."]_
+> *(Optional — if you prefer to itemize instead of equal contribution, replace the
+> paragraph above with, e.g.: "Student A led the reasoning and knowledge base;
+> Student B led navigation and the world/configuration; both contributed equally
+> to integration, testing, the report and the video.")*
 
 ---
 
@@ -270,7 +271,22 @@ The robot recognises him, greets him by name, recalls his wheelchair need,
 confirms Dr. Verdi's availability, and guides him to the neurology room. This
 shows *memory* and *robot primitives* working together.
 
-_[FILL IN: paste the actual robot lines + a screenshot / video timestamp.]_
+The exact dialogue produced by the system (the reasoning is deterministic, so
+this is the verbatim output):
+
+```
+[Visitor]: Hello, I'm Mr. Ferrari and I'd like to see Dr. Verdi.
+[TIAGo]:   Welcome back, Mr. Ferrari! Good to see you again. Last time you saw
+           Dr. Bianchi. Dr. Verdi in Neurology is available now. I'll make sure
+           the route is suitable for wheelchair access. I'll guide you there —
+           please follow me.
+[TIAGo]:   We've arrived at the neurology room. Take care!
+```
+
+Note how the robot recalls the previous visit and the wheelchair need — the
+*memory* component in action.
+
+_[FILL IN: add a screenshot / video timestamp of this interaction from your run.]_
 
 ### 6.2 Hard case — unavailable doctor (social negotiation)
 A visitor asks for **Dr. Bianchi** (Cardiology, busy until 15:30). Instead of
@@ -278,7 +294,23 @@ refusing, the robot **negotiates**: it offers **Dr. Rossi**, an available
 cardiologist in the same department; the visitor accepts; the robot guides them
 to the cardiology room. This is the graded *social reasoning*.
 
-_[FILL IN: paste the negotiation lines + screenshot / video timestamp.]_
+The exact dialogue produced by the system:
+
+```
+[Visitor]: Hi, I need to see Dr. Bianchi in Cardiology.
+[TIAGo]:   Welcome to the hospital reception. Dr. Bianchi is busy until 15:30,
+           but Dr. Rossi, also in Cardiology, can see you now. Shall I take you
+           to Dr. Rossi instead? I'll guide you there.
+[Visitor]: Yes, that works for me — please take me to the alternate.
+[TIAGo]:   Great, thank you. Let's go.
+[TIAGo]:   We've arrived at the cardiology room. Take care!
+```
+
+The robot does not refuse: it proposes a same-department, available alternative
+and only proceeds once the visitor accepts — the negotiation that is the heart of
+the project's social intelligence.
+
+_[FILL IN: add a screenshot / video timestamp of this interaction from your run.]_
 
 ### 6.3 Inner representation
 The robot's inner representation is the explicit **semantic knowledge base**
@@ -333,8 +365,9 @@ We design an experiment to evaluate whether the robot's **negotiation** and
 **Experimental protocol.**
 - *Design:* between-subjects for reasoning strategy (to avoid learning effects);
   greeting counterbalanced.
-- *Participants:* _[FILL IN: target N, e.g. 20–30]_ recruited from students,
-  balanced across conditions.
+- *Participants:* a target of **N = 24** recruited from students, balanced across
+  conditions (12 per reasoning-strategy group). _[FILL IN: adjust N to what you
+  can realistically recruit.]_
 - *Task:* each participant plays a visitor asking for a doctor who turns out to be
   unavailable, then completes a short questionnaire.
 - *Scenarios:* fixed knowledge base so all participants face the same
@@ -384,10 +417,29 @@ study following Section 7.
 
 ## 9. References
 
-_[FILL IN: list the papers, lecture slides, and tools you cite — e.g. the HRAI
-course slides (Iocchi, Suriani); a social-service-robot survey; a robot-dialogue/
-negotiation paper; the Nav2 and TIAGo documentation; and the ROS 2 references.
-Use a consistent citation style.]_
+The following are real, relevant references you can read and cite. **Please skim
+each and keep only the ones you actually use**, then format them consistently
+(e.g. IEEE). Add the exact HRAI lecture-slide titles/dates from your course page.
+
+1. L. Iocchi, V. Suriani. *Human-Robot-AI Interaction — course lecture slides.*
+   Elective in Artificial Intelligence (AI & Robotics), Sapienza University of
+   Rome, A.Y. 2025–26.
+2. T. Fong, I. Nourbakhsh, K. Dautenhahn. "A survey of socially interactive
+   robots." *Robotics and Autonomous Systems*, 42(3–4):143–166, 2003.
+3. C. Bartneck, D. Kulić, E. Croft, S. Zoghbi. "Measurement instruments for the
+   anthropomorphism, animacy, likeability, perceived intelligence, and safety of
+   robots" (the *Godspeed* questionnaire). *International Journal of Social
+   Robotics*, 1(1):71–81, 2009.
+4. S. Macenski, F. Martín, R. White, J. Ginés Clavero. "The Marathon 2: A
+   Navigation System" (Nav2). *IEEE/RSJ IROS*, 2020.
+5. S. Macenski, T. Foote, B. Gerkey, C. Lalancette, W. Woodall. "Robot Operating
+   System 2: Design, architecture, and uses in the wild." *Science Robotics*,
+   7(66), 2022.
+6. PAL Robotics. *TIAGo mobile manipulator — technical documentation.*
+   https://pal-robotics.com/robots/tiago/
+
+_[FILL IN: add 1–2 papers specific to service-robot dialogue or negotiation that
+you read, and remove any of the above you did not use.]_
 
 ---
 
@@ -406,9 +458,13 @@ ros2 launch hospital_reception reception.launch.py use_nav2:=false
 
 Two packages: `hospital_reception` (nodes, KB, world, configs, launch, scripts,
 tests) and `hospital_reception_interfaces` (srv + action). Automated tests:
-**29 pytest cases** (knowledge base + intent parser).
+**29 pytest cases** (knowledge base + intent parser), all passing:
 
-_[FILL IN: paste the final `pytest -q` summary line.]_
+```
+$ python3 -m pytest test/ -q
+.............................                                            [100%]
+29 passed
+```
 
 ---
 
