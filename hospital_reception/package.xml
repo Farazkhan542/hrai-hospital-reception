@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>hospital_reception</name>
+  <version>1.0.0</version>
+  <description>
+    HRAI TIAGo hospital-reception / guide robot. Greets visitors, consults a
+    semantic knowledge base (doctors, patients, locations), performs social
+    reasoning to negotiate when a requested doctor is unavailable, and guides
+    visitors by wrapping Nav2. CPU-only / software-rendering friendly.
+  </description>
+  <maintainer email="khanfaraz39767@gmail.com">HRAI Student</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <!-- Core ROS2 python client + our custom interfaces -->
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>hospital_reception_interfaces</exec_depend>
+
+  <!-- Navigation: Nav2 NavigateToPose action (imported lazily, only when
+       use_nav2:=true). action_msgs backs the rclpy action client/server. -->
+  <exec_depend>nav2_msgs</exec_depend>
+  <exec_depend>action_msgs</exec_depend>
+
+  <!-- Launch -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

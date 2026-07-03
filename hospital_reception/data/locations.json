@@ -1,0 +1,10 @@
+{
+  "_comment": "Named semantic locations -> map pose (x, y, yaw in radians). Used by the navigation node to turn a semantic destination into a Nav2 goal. IMPORTANT: these coordinates are PLACEHOLDERS matched to worlds/hospital.world. After you build the SLAM map (see README), re-measure the real poses in RViz and TUNE these values so navigation goals land in the right rooms.",
+  "locations": {
+    "reception":       {"x": 0.0, "y": 0.0,  "yaw": 0.0},
+    "cardiology_room": {"x": 3.0, "y": 1.5,  "yaw": 0.0},
+    "neurology_room":  {"x": 3.0, "y": -1.5, "yaw": 0.0},
+    "pediatrics_room": {"x": 5.0, "y": 0.0,  "yaw": 0.0},
+    "waiting_area":    {"x": 1.5, "y": 0.0,  "yaw": 0.0}
+  }
+}

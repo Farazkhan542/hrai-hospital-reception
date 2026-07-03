@@ -1,0 +1,14 @@
+# GoToLocation.action
+# Navigation goal used by the interaction node to ask the navigation node
+# (Nav2 wrapper) to guide the visitor to a semantic location.
+
+# ---- Goal ----
+string location_key
+---
+# ---- Result ----
+bool arrived
+string message
+---
+# ---- Feedback ----
+float32 distance_remaining
+string status

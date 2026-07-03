@@ -1,0 +1,26 @@
+# .gitignore for the HRAI hospital-reception packages
+# (hospital_reception + hospital_reception_interfaces)
+
+# ---- colcon / ament build artifacts ----
+build/
+install/
+log/
+
+# ---- Python bytecode / caches ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# ---- Generated map files (rebuilt by SLAM; excluded from the code ZIP) ----
+# The real map is produced by `map_saver_cli` after mapping hospital.world.
+# The committed placeholders under maps/ are only format stubs.
+hospital_reception/maps/hospital_map.pgm
+hospital_reception/maps/hospital_map.yaml
+
+# ---- Editor / OS cruft ----
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db

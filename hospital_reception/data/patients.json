@@ -1,0 +1,8 @@
+{
+  "_comment": "Known visitors/patients + light history. Enables returning-visitor recognition = the 'memory' component in the report. 'usual_doctor' references a doctor id in doctors.json; 'needs' influences the reasoning node's phrasing (e.g. wheelchair access).",
+  "patients": [
+    {"id": "p1", "name": "Mr. Ferrari", "last_visit": "2026-06-01", "usual_doctor": "d2", "needs": "wheelchair access"},
+    {"id": "p2", "name": "Ms. Costa",   "last_visit": null,         "usual_doctor": null, "needs": null},
+    {"id": "p3", "name": "Mrs. Romano", "last_visit": "2026-05-12", "usual_doctor": "d3", "needs": null}
+  ]
+}

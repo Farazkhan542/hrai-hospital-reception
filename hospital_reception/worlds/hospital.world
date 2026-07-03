@@ -1,0 +1,194 @@
+<?xml version="1.0" ?>
+<!--
+  hospital.world — lightweight Gazebo world for the HRAI TIAGo hospital
+  reception demo. Deliberately built from PRIMITIVE boxes/cylinders only (no
+  meshes, no textures) so it renders on CPU / llvmpipe without a GPU.
+
+  Layout (matches data/locations.json; +X points "into" the hospital).
+  Rooms and their (x, y) poses:
+    reception       (0.0,  0.0)   spawn point
+    waiting_area    (1.5,  0.0)
+    cardiology_room (3.0,  1.5)   upper side room
+    neurology_room  (3.0, -1.5)   lower side room
+    pediatrics_room (5.0,  0.0)   far room, straight ahead down the corridor
+
+  NOTE: TIAGo itself is NOT included here. The course launcher
+  (sim.launch.py) spawns TIAGo at the origin (reception). Keep it that way, as
+  the course notes for house.world.
+-->
+<sdf version="1.6">
+  <world name="hospital">
+
+    <!-- Cheap ambient + one directional light (no shadows to save CPU). -->
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.8 0.85 0.9 1</background>
+      <shadows>false</shadows>
+    </scene>
+
+    <light name="sun" type="directional">
+      <cast_shadows>false</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.9 0.9 0.9 1</diffuse>
+      <specular>0.1 0.1 0.1 1</specular>
+      <direction>-0.3 0.2 -1.0</direction>
+    </light>
+
+    <!-- Flat floor. -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- =====================================================================
+         Walls + fixtures. One static model holds all primitive geometry so the
+         physics engine treats it as immovable (cheap on CPU).
+         Each wall link: <box> size = length x thickness x height.
+         Walls are 0.1 m thick, 1.0 m tall.
+    ====================================================================== -->
+    <model name="hospital_structure">
+      <static>true</static>
+
+      <!-- ===== Outer boundary (8 m x 6 m room) ===== -->
+      <!-- North wall (y = +3), along X, length 8, centred at x=2.5 -->
+      <link name="wall_north">
+        <pose>2.5 3.0 0.5 0 0 0</pose>
+        <collision name="c"><geometry><box><size>8.0 0.1 1.0</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>8.0 0.1 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.82 1</ambient><diffuse>0.8 0.8 0.82 1</diffuse></material>
+        </visual>
+      </link>
+
+      <!-- South wall (y = -3) -->
+      <link name="wall_south">
+        <pose>2.5 -3.0 0.5 0 0 0</pose>
+        <collision name="c"><geometry><box><size>8.0 0.1 1.0</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>8.0 0.1 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.82 1</ambient><diffuse>0.8 0.8 0.82 1</diffuse></material>
+        </visual>
+      </link>
+
+      <!-- West wall (x = -1.5), along Y, length 6 -->
+      <link name="wall_west">
+        <pose>-1.5 0.0 0.5 0 0 1.5708</pose>
+        <collision name="c"><geometry><box><size>6.0 0.1 1.0</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>6.0 0.1 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.82 1</ambient><diffuse>0.8 0.8 0.82 1</diffuse></material>
+        </visual>
+      </link>
+
+      <!-- East wall (x = 6.5), behind pediatrics -->
+      <link name="wall_east">
+        <pose>6.5 0.0 0.5 0 0 1.5708</pose>
+        <collision name="c"><geometry><box><size>6.0 0.1 1.0</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>6.0 0.1 1.0</size></box></geometry>
+          <material><ambient>0.8 0.8 0.82 1</ambient><diffuse>0.8 0.8 0.82 1</diffuse></material>
+        </visual>
+      </link>
+
+      <!-- ===== Reception / corridor partitions ===== -->
+      <!-- Split reception (left) from the room corridor at x=1.5, leaving a
+           central doorway (gap y in [-0.6, +0.6]) for the robot to pass. -->
+      <link name="partition_upper">
+        <pose>1.5 1.8 0.5 0 0 1.5708</pose>
+        <collision name="c"><geometry><box><size>2.4 0.1 1.0</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2.4 0.1 1.0</size></box></geometry>
+          <material><ambient>0.75 0.78 0.8 1</ambient><diffuse>0.75 0.78 0.8 1</diffuse></material>
+        </visual>
+      </link>
+      <link name="partition_lower">
+        <pose>1.5 -1.8 0.5 0 0 1.5708</pose>
+        <collision name="c"><geometry><box><size>2.4 0.1 1.0</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2.4 0.1 1.0</size></box></geometry>
+          <material><ambient>0.75 0.78 0.8 1</ambient><diffuse>0.75 0.78 0.8 1</diffuse></material>
+        </visual>
+      </link>
+
+      <!-- Separate the two side rooms from the pediatrics corridor at x=4,
+           leaving a central doorway (gap y in [-0.8, +0.8]) to reach x=5. -->
+      <link name="room_wall_upper">
+        <pose>4.0 1.9 0.5 0 0 1.5708</pose>
+        <collision name="c"><geometry><box><size>2.2 0.1 1.0</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2.2 0.1 1.0</size></box></geometry>
+          <material><ambient>0.75 0.78 0.8 1</ambient><diffuse>0.75 0.78 0.8 1</diffuse></material>
+        </visual>
+      </link>
+      <link name="room_wall_lower">
+        <pose>4.0 -1.9 0.5 0 0 1.5708</pose>
+        <collision name="c"><geometry><box><size>2.2 0.1 1.0</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>2.2 0.1 1.0</size></box></geometry>
+          <material><ambient>0.75 0.78 0.8 1</ambient><diffuse>0.75 0.78 0.8 1</diffuse></material>
+        </visual>
+      </link>
+
+      <!-- ===== Reception desk (simple box) near origin ===== -->
+      <link name="reception_desk">
+        <pose>0.0 -0.9 0.4 0 0 0</pose>
+        <collision name="c"><geometry><box><size>1.4 0.5 0.8</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>1.4 0.5 0.8</size></box></geometry>
+          <material><ambient>0.5 0.35 0.2 1</ambient><diffuse>0.6 0.4 0.25 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- =====================================================================
+         Obstacles for meaningful obstacle avoidance. Static (cheap) but the
+         laser sees them, so Nav2's local planner must route around them.
+         Placed OFF the location coordinates and doorway centres.
+    ====================================================================== -->
+    <!-- Chair 1 — reception area -->
+    <model name="chair_1">
+      <static>true</static>
+      <link name="l">
+        <pose>1.0 1.0 0.25 0 0 0</pose>
+        <collision name="c"><geometry><box><size>0.4 0.4 0.5</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.4 0.4 0.5</size></box></geometry>
+          <material><ambient>0.2 0.3 0.6 1</ambient><diffuse>0.2 0.3 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Chair 2 — near the corridor -->
+    <model name="chair_2">
+      <static>true</static>
+      <link name="l">
+        <pose>2.4 0.7 0.25 0 0 0</pose>
+        <collision name="c"><geometry><box><size>0.4 0.4 0.5</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.4 0.4 0.5</size></box></geometry>
+          <material><ambient>0.2 0.3 0.6 1</ambient><diffuse>0.2 0.3 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Chair 3 — lower corridor -->
+    <model name="chair_3">
+      <static>true</static>
+      <link name="l">
+        <pose>2.4 -0.9 0.25 0 0 0</pose>
+        <collision name="c"><geometry><box><size>0.4 0.4 0.5</size></box></geometry></collision>
+        <visual name="v"><geometry><box><size>0.4 0.4 0.5</size></box></geometry>
+          <material><ambient>0.2 0.3 0.6 1</ambient><diffuse>0.2 0.3 0.6 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Potted plant — cylinder, mild obstacle near the entrance doorway -->
+    <model name="plant">
+      <static>true</static>
+      <link name="l">
+        <pose>1.2 0.35 0.3 0 0 0</pose>
+        <collision name="c"><geometry><cylinder><radius>0.2</radius><length>0.6</length></cylinder></geometry></collision>
+        <visual name="v"><geometry><cylinder><radius>0.2</radius><length>0.6</length></cylinder></geometry>
+          <material><ambient>0.1 0.5 0.1 1</ambient><diffuse>0.1 0.55 0.1 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- Modest real-time factor target; keep physics light for CPU. -->
+    <physics type="ode">
+      <max_step_size>0.004</max_step_size>
+      <real_time_factor>1.0</real_time_factor>
+      <real_time_update_rate>250</real_time_update_rate>
+    </physics>
+
+  </world>
+</sdf>

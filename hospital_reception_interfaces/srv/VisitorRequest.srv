@@ -1,0 +1,13 @@
+# VisitorRequest.srv
+# Request/response between the interaction node (perception + generation) and the
+# reasoning node (social reasoning / dialogue policy).
+
+# ---- Request ----
+string visitor_name        # may be empty if unknown
+string requested_doctor    # free text, e.g. "Dr. Bianchi"
+string free_text           # raw utterance, for logging
+---
+# ---- Response ----
+string speech              # what the robot should say (spoken via TTS)
+string goto_location       # location key to navigate to ("" = none)
+bool   resolved            # true if a destination was agreed

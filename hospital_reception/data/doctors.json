@@ -1,0 +1,10 @@
+{
+  "_comment": "Semantic memory: doctors with department, room location key and availability. Includes at least one AVAILABLE and one UNAVAILABLE doctor per department so the reasoning node can negotiate same-department alternates (the graded 'hard case').",
+  "doctors": [
+    {"id": "d1", "name": "Dr. Rossi",   "department": "Cardiology", "location": "cardiology_room", "available": true,  "next_slot": "now"},
+    {"id": "d2", "name": "Dr. Bianchi", "department": "Cardiology", "location": "cardiology_room", "available": false, "next_slot": "15:30"},
+    {"id": "d3", "name": "Dr. Verdi",   "department": "Neurology",  "location": "neurology_room",  "available": true,  "next_slot": "now"},
+    {"id": "d4", "name": "Dr. Greco",   "department": "Pediatrics", "location": "pediatrics_room", "available": true,  "next_slot": "now"},
+    {"id": "d5", "name": "Dr. Marino",  "department": "Neurology",  "location": "neurology_room",  "available": false, "next_slot": "16:00"}
+  ]
+}
