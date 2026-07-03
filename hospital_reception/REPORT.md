@@ -466,6 +466,26 @@ $ python3 -m pytest test/ -q
 29 passed
 ```
 
+**Container build & run (verified).** Both packages build cleanly with `colcon`
+on ROS 2 Humble, and the scripted demo runs end-to-end in a ROS 2 Humble
+container (`ros:humble-ros-base`):
+
+```
+$ colcon build --packages-up-to hospital_reception
+Starting >>> hospital_reception_interfaces
+Finished <<< hospital_reception_interfaces [39.9s]
+Starting >>> hospital_reception
+Finished <<< hospital_reception [2.27s]
+Summary: 2 packages finished [43.9s]
+```
+
+The service (`/visitor_request`) and the action (`/goto_location`) are exercised
+by the demo; the reasoning node logs confirm the two branches firing:
+`[EASY] Available -> guiding to 'neurology_room'` and `[HARD] Unavailable ->
+same-dept alternate Dr. Rossi at 'cardiology_room'`. The verbatim dialogue is in
+Section 6. (The full Gazebo/TIAGo visual simulation and the ~3-minute demo video
+are produced separately, inside the course container.)
+
 ---
 
 *Prepared for the HRAI 2025–26 project submission.*
