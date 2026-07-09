@@ -334,6 +334,20 @@ dialogue of Sections 6.1–6.2 being produced by the running nodes, including th
 navigation feedback stream. _[FILL IN: if you also record the Gazebo visual run,
 reference it here alongside the terminal capture.]_
 
+### 6.6 SLAM map of the hospital world
+A real occupancy-grid map of `hospital.world` was produced with `slam_toolbox`
+running against **TIAGo simulated headlessly in Gazebo** (Xvfb virtual display,
+software rendering, `arm_type:=no-arm` to fit the CPU budget). The laser
+(`/scan_raw`) published real ranges under software rendering, and a scripted
+exploration routine drove the base (`/key_vel`) while the map was built, then
+saved with `nav2_map_server` (`maps/hospital_map.pgm/.yaml`, 139×92 cells @ 5 cm,
+origin `[-0.5, -1.61, 0]`). The map clearly shows the reception walls and the
+central partition doorway of the world. Coverage of the far rooms is partial —
+the scripted run is short; driving longer (e.g. by teleop in the course
+container) extends the map. Because TIAGo spawns at the world origin
+(reception), the map frame coincides with the world frame and the
+`locations.json` coordinates are used unchanged.
+
 ---
 
 ## 7. Experimental Evaluation
