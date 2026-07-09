@@ -327,12 +327,13 @@ Two input modes (interactive typing / scripted playback) and two navigation mode
 how the robot degrades gracefully on weak hardware.
 
 ### 6.5 Demo video
-A screen recording of the complete scripted demo (both interactions, running live
-on ROS 2 Humble inside a container) was captured from the system's terminal via a
-virtual display (`demo_terminal.mp4`, ~75 s, 1280×720). It shows the exact
-dialogue of Sections 6.1–6.2 being produced by the running nodes, including the
-navigation feedback stream. _[FILL IN: if you also record the Gazebo visual run,
-reference it here alongside the terminal capture.]_
+A ~3-minute screen recording (`HRAI_demo_3min.mp4`, 3:02, 1280×720) captures the
+complete scripted demo running live on ROS 2 Humble inside a container, via a
+virtual display: an intro describing the robot's capabilities, both interactions
+(Sections 6.1–6.2) produced live by the running nodes — including the navigation
+feedback stream during guidance — and a closing summary of the easy and hard
+cases. The video is published with the code:
+https://github.com/Farazkhan542/hrai-hospital-reception/releases/tag/v1.0
 
 ### 6.6 SLAM map of the hospital world
 A real occupancy-grid map of `hospital.world` was produced with `slam_toolbox`
