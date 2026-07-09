@@ -326,6 +326,14 @@ Two input modes (interactive typing / scripted playback) and two navigation mode
 (real Nav2 / simulated motion) illustrate different modalities of interaction and
 how the robot degrades gracefully on weak hardware.
 
+### 6.5 Demo video
+A screen recording of the complete scripted demo (both interactions, running live
+on ROS 2 Humble inside a container) was captured from the system's terminal via a
+virtual display (`demo_terminal.mp4`, ~75 s, 1280×720). It shows the exact
+dialogue of Sections 6.1–6.2 being produced by the running nodes, including the
+navigation feedback stream. _[FILL IN: if you also record the Gazebo visual run,
+reference it here alongside the terminal capture.]_
+
 ---
 
 ## 7. Experimental Evaluation
